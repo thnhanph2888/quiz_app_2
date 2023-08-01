@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="loader-container" [hidden]="listQuestionAnswered">
+    <div class="loader"></div>
+  </div>
+  <div [hidden]="listQuestionAnswered.length < 1">
+    <div class="question-container" *ngFor="let questionAnswered of listQuestionAnswered; index as i">
+      <div class="question-review">
+        <p>{{i + 1}}. {{questionAnswered.question}}</p>
+      </div>
+      <div class="answer-list">
+        <button
+          *ngFor="let answer of questionAnswered.answers"
+          [class.answer-review]="answer != questionAnswered.selectedAnswer"
+          [class.answer-correct-review]="answer == questionAnswered.selectedAnswer && questionAnswered.selectedAnswer == questionAnswered.correct_answer"
+          [class.answer-incorrect-review]="answer == questionAnswered.selectedAnswer && questionAnswered.selectedAnswer != questionAnswered.correct_answer"
+        >
+          {{answer}}
+        </button>
+        <div
+          class="correct"
+          [hidden]="questionAnswered.selectedAnswer == questionAnswered.correct_answer"
+        >
+          The correct answer is: {{questionAnswered.correct_answer}}
+        </div>
+        <div
+          class="correct"
+          [hidden]="questionAnswered.selectedAnswer != questionAnswered.correct_answer"
+        >
+          Your answer is correct!
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mb-5">
+      <button class="my-button" (click)="openModal()">Finnish Review</button>
+    </div>
+  </div>
+</div>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="button-container">
+      <button id="playAgainButton" class="my-button" routerLink="/question/list">
+        Play Again</button>
+      <button id="homeButton" routerLink="/" class="my-button">
+        Back Home</button>
+    </div>
+  </div>
+</div>
+
